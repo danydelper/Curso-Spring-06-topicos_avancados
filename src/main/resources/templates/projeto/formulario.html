@@ -28,7 +28,10 @@
                   <div class="form-group">
                     <label for="nome">Nome</label>
                     <input type="text" class="form-control" placeholder="App Android" th:field="*{nome}">
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('nome')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
               </div>
 
@@ -48,7 +51,10 @@
                     <select th:field="*{cliente}" class="form-control select2bs4" style="width: 100%;">
                       <option th:each="cliente : ${clientes}" th:text="${cliente.nome}" th:value="${cliente.id}"></option>
                     </select>
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('cliente')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
@@ -56,7 +62,10 @@
                     <select th:field="*{lider}" class="form-control select2bs4" style="width: 100%;">
                       <option th:each="lider : ${lideres}" th:text="${lider.nome}" th:value="${lider.id}"></option>
                     </select>
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('lider')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
               </div>
 
@@ -65,13 +74,19 @@
                   <div class="form-group">
                     <label for="dataInicio">Iníado em</label>
                     <input type="date" class="form-control" th:field="*{dataInicio}">
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('dataInicio')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="dataFim">Finalizado em</label>
                     <input type="date" class="form-control" th:field="*{dataFim}">
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('dataFim')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
               </div>
 
@@ -80,13 +95,19 @@
                   <div class="form-group">
                     <label for="orcamentoEstimado">Orçamento</label>
                     <input type="text" class="form-control" th:field="*{orcamento}">
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('orcamento')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="totalGasto">Gastos</label>
                     <input type="text" class="form-control" th:field="*{gastos}">
-                  </div>
+                    <ul>
+                      <li class="text-danger" th:each="erro : ${#fields.errors('gastos')}" th:text="${erro}"></li>  
+                    </ul>
+                </div>
                 </div>
               </div>
 
