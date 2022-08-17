@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.treinaweb.twprojetos.entidades.Funcionario;
-import br.com.treinaweb.twprojetos.enums.UF;
 import br.com.treinaweb.twprojetos.repositorios.CargoRepositorio;
 import br.com.treinaweb.twprojetos.repositorios.FuncionarioRepositorio;
 import br.com.treinaweb.twprojetos.utils.SenhaUtils;
 import br.com.treinaweb.twprojetos.validadadores.FuncionarioValidador;
-import br.com.treinaweb.twprojetos.validadadores.PessoaValidador;
 
 @Controller
 @RequestMapping("/funcionarios")
@@ -35,7 +33,6 @@ public class FuncionarioControle {
     @InitBinder("funcionario")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(new FuncionarioValidador(funcionarioRepositorio));
-        binder.addValidators(new PessoaValidador());
     }
 
     @GetMapping
@@ -62,7 +59,6 @@ public class FuncionarioControle {
 
         modelAndView.addObject("funcionario", new Funcionario());
         modelAndView.addObject("cargos", cargoRepositorio.findAll());
-        modelAndView.addObject("ufs", UF.values());
 
         return modelAndView;
     }
@@ -73,7 +69,6 @@ public class FuncionarioControle {
 
         modelAndView.addObject("funcionario", funcionarioRepositorio.getOne(id));
         modelAndView.addObject("cargos", cargoRepositorio.findAll());
-        modelAndView.addObject("ufs", UF.values());
 
         return modelAndView;
     }
@@ -82,7 +77,6 @@ public class FuncionarioControle {
     public String cadastrar(@Valid Funcionario funcionario, BindingResult resultado, ModelMap model) {
         if (resultado.hasErrors()) {
             model.addAttribute("cargos", cargoRepositorio.findAll());
-            model.addAttribute("ufs", UF.values());
 
             return "funcionario/formulario";
         }
@@ -99,7 +93,6 @@ public class FuncionarioControle {
     public String editar(@Valid Funcionario funcionario, BindingResult resultado, @PathVariable Long id, ModelMap model) {
         if (resultado.hasErrors()) {
             model.addAttribute("cargos", cargoRepositorio.findAll());
-            model.addAttribute("ufs", UF.values());
 
             return "funcionario/formulario";
         }

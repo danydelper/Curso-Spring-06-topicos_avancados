@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.treinaweb.twprojetos.entidades.Cliente;
-import br.com.treinaweb.twprojetos.enums.UF;
 import br.com.treinaweb.twprojetos.repositorios.ClienteRepositorio;
 import br.com.treinaweb.twprojetos.validadadores.ClienteValidador;
-import br.com.treinaweb.twprojetos.validadadores.PessoaValidador;
 
 @Controller
 @RequestMapping("/clientes")
@@ -30,7 +28,6 @@ public class ClienteControle {
     @InitBinder("cliente")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(new ClienteValidador(clienteRepositorio));
-        binder.addValidators(new PessoaValidador());
     }
 
     @GetMapping
@@ -56,7 +53,6 @@ public class ClienteControle {
         ModelAndView modelAndView = new ModelAndView("cliente/formulario");
 
         modelAndView.addObject("cliente", new Cliente());
-        modelAndView.addObject("ufs", UF.values());
 
         return modelAndView;
     }
@@ -66,7 +62,6 @@ public class ClienteControle {
         ModelAndView modelAndView = new ModelAndView("cliente/formulario");
 
         modelAndView.addObject("cliente", clienteRepositorio.getOne(id));
-        modelAndView.addObject("ufs", UF.values());
 
         return modelAndView;
     }
@@ -74,8 +69,6 @@ public class ClienteControle {
     @PostMapping({"/cadastrar", "/{id}/editar"})
     public String salvar(@Valid Cliente cliente, BindingResult resultado, ModelMap model) {
         if (resultado.hasErrors()) {
-            model.addAttribute("ufs", UF.values());
-
             return "cliente/formulario";
         }
 
