@@ -1,5 +1,6 @@
 package br.com.treinaweb.twprojetos.controles;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.treinaweb.twprojetos.dto.AlertDTO;
 import br.com.treinaweb.twprojetos.entidades.Funcionario;
-import br.com.treinaweb.twprojetos.excecoes.FuncionarioEhLiderdeProjetoException;
-import br.com.treinaweb.twprojetos.repositorios.FuncionarioRepositorio;
+import br.com.treinaweb.twprojetos.excecoes.FuncionarioEhLiderDeProjeto;
 import br.com.treinaweb.twprojetos.servicos.CargoServico;
 import br.com.treinaweb.twprojetos.servicos.FuncionarioServico;
-import br.com.treinaweb.twprojetos.validadadores.FuncionarioValidador;
+import br.com.treinaweb.twprojetos.validadores.FuncionarioValidador;
 
 @Controller
 @RequestMapping("/funcionarios")
 public class FuncionarioControle {
-
-    @Autowired
-    private FuncionarioRepositorio funcionarioRepositorio;
 
     @Autowired
     private CargoServico cargoServico;
@@ -36,9 +33,12 @@ public class FuncionarioControle {
     @Autowired
     private FuncionarioServico funcionarioServico;
 
+    @Autowired
+    private FuncionarioValidador funcionarioValidador;
+
     @InitBinder("funcionario")
     public void initBinder(WebDataBinder binder) {
-        binder.addValidators(new FuncionarioValidador(funcionarioRepositorio));
+        binder.addValidators(funcionarioValidador);
     }
 
     @GetMapping
@@ -88,7 +88,7 @@ public class FuncionarioControle {
         }
 
         funcionarioServico.cadastrar(funcionario);
-        attrs.addFlashAttribute("alert", new AlertDTO("Funcionario cadastrado com sucesso", "alert-success"));
+        attrs.addFlashAttribute("alert", new AlertDTO("Funcionario cadastrado com sucesso!", "alert-success"));
 
         return "redirect:/funcionarios";
     }
@@ -102,7 +102,7 @@ public class FuncionarioControle {
         }
 
         funcionarioServico.atualizar(funcionario, id);
-        attrs.addFlashAttribute("alert", new AlertDTO("Funcionario editado com sucesso", "alert-success"));
+        attrs.addFlashAttribute("alert", new AlertDTO("Funcionario editado com sucesso!", "alert-success"));
 
         return "redirect:/funcionarios";
     }
@@ -111,11 +111,12 @@ public class FuncionarioControle {
     public String excluir(@PathVariable Long id, RedirectAttributes attrs) {
         try {
             funcionarioServico.excluirPorId(id);
-            attrs.addFlashAttribute("alert", new AlertDTO("Funcionario excluido com sucesso", "alert-success"));
-        } catch (FuncionarioEhLiderdeProjetoException e) {
+            attrs.addFlashAttribute("alert", new AlertDTO("Funcionario excluido com sucesso!", "alert-success"));
+        } catch (FuncionarioEhLiderDeProjeto e) {
             attrs.addFlashAttribute("alert", new AlertDTO("Funcionario não pode ser excluido, pois é lider de algum projeto!", "alert-danger"));
         }
+
         return "redirect:/funcionarios";
     }
-     
+
 }

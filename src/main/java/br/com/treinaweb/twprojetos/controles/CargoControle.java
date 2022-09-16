@@ -2,7 +2,6 @@ package br.com.treinaweb.twprojetos.controles;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +20,21 @@ import br.com.treinaweb.twprojetos.servicos.CargoServico;
 @RequestMapping("/cargos")
 public class CargoControle {
 
-    @Autowired
+    //@Autowired   --> injeção de dependência através atributo da classe
     private CargoServico cargoServico;
 
+    /*  --> injeção de dependência através do método set    
+    @Autowired
+    public void setCargoServico(CargoServico cargoServico) {
+        this.cargoServico = cargoServico;
+    }
+     */
+
+    // --> injeção de dependência através do constructor
+    public CargoControle(CargoServico cargoServico) {
+        this.cargoServico = cargoServico;
+    }
+     
     @GetMapping
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("cargo/home");

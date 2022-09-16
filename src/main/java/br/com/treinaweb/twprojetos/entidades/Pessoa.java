@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @MappedSuperclass
 public abstract class Pessoa extends Entidade {
 
+
     @NotNull
     @Size(min = 3, max = 80)
     @Column(nullable = false, length = 80)
@@ -35,7 +36,7 @@ public abstract class Pessoa extends Entidade {
 
     @NotNull
     @Size(min = 15, max = 15)
-    @Pattern(regexp = "\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Deve ser informado no formato (99) 99999-9999")
+    @Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Deve estar no formato (99) 99999-9999")
     @Column(nullable = false, length = 15)
     private String telefone;
 
@@ -104,6 +105,6 @@ public abstract class Pessoa extends Entidade {
         this.endereco = endereco;
     }
 
-    
-    
+
+
 }

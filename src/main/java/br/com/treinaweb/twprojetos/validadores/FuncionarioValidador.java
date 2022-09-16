@@ -1,4 +1,4 @@
-package br.com.treinaweb.twprojetos.validadadores;
+package br.com.treinaweb.twprojetos.validadores;
 
 import java.util.Optional;
 
@@ -25,10 +25,12 @@ public class FuncionarioValidador implements Validator{
     public void validate(Object target, Errors errors) {
         Funcionario funcionario = (Funcionario) target;
         
-        if (funcionario.getDataAdmissao().isBefore(funcionario.getDataNascimento())) {
-            errors.rejectValue("dataAdmissao", "validacao.funcionario.dataNascimento.posterior.dataAdmissao");
+        if (funcionario.getDataAdmissao() != null && funcionario.getDataDemissao() != null) {
+            if (funcionario.getDataDemissao().isBefore(funcionario.getDataAdmissao())) {
+                errors.rejectValue("dataDemissao", "validacao.funcionario.dataAdmissao.posterior.dataDemissao");
+            }
         }
-
+        
         if (funcionario.getDataAdmissao() != null && funcionario.getDataDemissao() != null) {
             if (funcionario.getDataDemissao().isBefore(funcionario.getDataAdmissao())) {
                 errors.rejectValue("dataDemissao", "validacao.funcionario.dataAdmissao.posterior.dataDemissao");

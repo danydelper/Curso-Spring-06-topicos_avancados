@@ -83,5 +83,5 @@ public class Funcionario extends Pessoa {
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
     }
-    
+
 }

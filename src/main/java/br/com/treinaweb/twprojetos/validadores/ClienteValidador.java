@@ -1,4 +1,4 @@
-package br.com.treinaweb.twprojetos.validadadores;
+package br.com.treinaweb.twprojetos.validadores;
 
 import java.util.Optional;
 
@@ -27,12 +27,12 @@ public class ClienteValidador implements Validator{
 
         Optional<Cliente> clienteEncontrado = clienteRepositorio.findByEmail(cliente.getEmail());
         if (clienteEncontrado.isPresent() && !clienteEncontrado.get().equals(cliente)) {
-            errors.rejectValue("email", "validacao.cliente.email.exixtente");
+            errors.rejectValue("email", "validacao.cliente.email.existente");
         }
 
         clienteEncontrado = clienteRepositorio.findByCpf(cliente.getCpf());
         if (clienteEncontrado.isPresent() && !clienteEncontrado.get().equals(cliente)) {
-            errors.rejectValue("cpf", "validacao.cliente.cpf.exixtente");
+            errors.rejectValue("cpf", "validacao.cliente.cpf.existente");
         }
         
     }

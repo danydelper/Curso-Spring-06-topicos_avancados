@@ -1,4 +1,4 @@
-package br.com.treinaweb.twprojetos.validadadores;
+package br.com.treinaweb.twprojetos.validadores;
 
 import java.time.LocalDate;
 import java.time.Period;

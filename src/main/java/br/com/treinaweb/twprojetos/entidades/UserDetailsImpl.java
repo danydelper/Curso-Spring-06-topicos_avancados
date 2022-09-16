@@ -39,7 +39,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isAccountNonExpired() {
         // TODO Auto-generated method stub
-    
         return true;
     }
 
@@ -50,8 +49,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // 
-    
+        // TODO Auto-generated method stub
         return true;
     }
 

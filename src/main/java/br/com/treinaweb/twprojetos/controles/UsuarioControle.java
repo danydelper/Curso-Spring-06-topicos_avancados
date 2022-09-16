@@ -1,8 +1,10 @@
 package br.com.treinaweb.twprojetos.controles;
 
+
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +15,15 @@ import br.com.treinaweb.twprojetos.dto.AlertDTO;
 import br.com.treinaweb.twprojetos.dto.AlterarSenhaDTO;
 import br.com.treinaweb.twprojetos.entidades.Funcionario;
 import br.com.treinaweb.twprojetos.repositorios.FuncionarioRepositorio;
-import br.com.treinaweb.twprojetos.utils.SenhaUtils;
 
 @Controller
 public class UsuarioControle {
 
     @Autowired
     private FuncionarioRepositorio funcionarioRepositorio;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login() {
@@ -41,15 +45,14 @@ public class UsuarioControle {
     public String alterarSenha(AlterarSenhaDTO form, Principal principal, RedirectAttributes attrs) {
         Funcionario usuario = funcionarioRepositorio.findByEmail(principal.getName()).get();
 
-        if (SenhaUtils.matches(form.getSenhaAtual(), usuario.getSenha())) {
-            usuario.setSenha(SenhaUtils.encode(form.getNovaSenha()));
+        if (passwordEncoder.matches(form.getSenhaAtual(), usuario.getSenha())) {
+            usuario.setSenha(passwordEncoder.encode(form.getNovaSenha()));
 
             funcionarioRepositorio.save(usuario);
 
-            attrs.addFlashAttribute("alert", new AlertDTO("Senha alterado com sucesso!", "alert-success"));
+            attrs.addFlashAttribute("alert", new AlertDTO("Senha alterada com sucesso!", "alert-success"));
         } else {
-            attrs.addFlashAttribute("alert", new AlertDTO("Senha atual esta incorreta!", "alert-danger"));
-
+            attrs.addFlashAttribute("alert", new AlertDTO("Senha atual está incorreta!", "alert-danger"));
         }
 
         return "redirect:/perfil";

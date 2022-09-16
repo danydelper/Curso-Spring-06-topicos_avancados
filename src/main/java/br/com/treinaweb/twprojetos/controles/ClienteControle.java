@@ -17,23 +17,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.treinaweb.twprojetos.dto.AlertDTO;
 import br.com.treinaweb.twprojetos.entidades.Cliente;
 import br.com.treinaweb.twprojetos.excecoes.ClientePossuiProjetosException;
-import br.com.treinaweb.twprojetos.repositorios.ClienteRepositorio;
 import br.com.treinaweb.twprojetos.servicos.ClienteServico;
-import br.com.treinaweb.twprojetos.validadadores.ClienteValidador;
+import br.com.treinaweb.twprojetos.validadores.ClienteValidador;
 
 @Controller
 @RequestMapping("/clientes")
 public class ClienteControle {
 
     @Autowired
-    private ClienteRepositorio clienteRepositorio;
+    private ClienteServico clienteServico;
 
     @Autowired
-    private ClienteServico clienteServico;
+    private ClienteValidador clienteValidador;
 
     @InitBinder("cliente")
     public void initBinder(WebDataBinder binder) {
-        binder.addValidators(new ClienteValidador(clienteRepositorio));
+        binder.addValidators(clienteValidador);
     }
 
     @GetMapping
@@ -84,9 +83,8 @@ public class ClienteControle {
         } else {
             clienteServico.atualizar(cliente, id);
             attr.addFlashAttribute("alert", new AlertDTO("Cliente editado com sucesso!", "alert-success"));
-        } 
-        
-        
+        }
+
         return "redirect:/clientes";
     }
 
@@ -98,7 +96,8 @@ public class ClienteControle {
         } catch (ClientePossuiProjetosException e) {
             attrs.addFlashAttribute("alert", new AlertDTO("Cliente não pode ser excluido, pois possui projeto(s) relacionado(s)!", "alert-danger"));
         }
+
         return "redirect:/clientes";
     }
-    
+
 }
