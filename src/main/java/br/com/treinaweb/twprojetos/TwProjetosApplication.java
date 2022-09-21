@@ -50,7 +50,7 @@ public class TwProjetosApplication implements CommandLineRunner{
 			funcionario.setSenha("senha@123");
 			funcionario.setDataNascimento(LocalDate.of(2000, 1, 1));
 			funcionario.setDataAdmissao(LocalDate.of(2022, 9, 20));
-			funcionario.setTelefone("(51) 33263-2030");
+			funcionario.setTelefone("(51) 99263-2030");
 			funcionario.setCargo(cargo);
 			funcionario.setEndereco(endereco);
 
