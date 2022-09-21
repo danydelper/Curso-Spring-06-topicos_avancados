@@ -40,7 +40,7 @@ public class TwProjetosApplication implements CommandLineRunner{
 			endereco.setCidade("Porto Alegre");
 			endereco.setBairro("Camaquã");
 			endereco.setLogradouro("Travessa Escobar");
-			endereco.setNumero("666");
+			endereco.setNumero("00");
 			endereco.setCep("91910-400");
 
 			Funcionario funcionario = new Funcionario();
